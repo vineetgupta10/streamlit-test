@@ -30,11 +30,12 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
+# Hugging Face Login
+sign = Login(hf_email, hf_pass)
+cookies = sign.login()
+
 # Function for generating LLM response
 def generate_response(prompt_input, email, passwd):
-    # Hugging Face Login
-    sign = Login(email, passwd)
-    cookies = sign.login()
     # Create ChatBot                        
     chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
     return chatbot.query(prompt_input, web_search=True)
