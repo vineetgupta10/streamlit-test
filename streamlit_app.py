@@ -3,7 +3,7 @@ from hugchat import hugchat
 from hugchat.login import Login
 
 # App title
-st.set_page_config(page_title="SatisfyAI")
+st.set_page_config(page_title="SatisfyAI App")
 
 # Hugging Face Credentials
 with st.sidebar:
