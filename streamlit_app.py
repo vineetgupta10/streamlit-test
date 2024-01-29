@@ -19,7 +19,7 @@ with st.sidebar:
             st.warning('Please enter your credentials!', icon='⚠️')
         else:
             st.success('Proceed to entering your prompt message!', icon='👉')
-    st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-an-llm-powered-chatbot-with-streamlit/)!')
+#    st.markdown('📖 Learn how to build this app in this [blog](https://blog.streamlit.io/how-to-build-an-llm-powered-chatbot-with-streamlit/)!')
     
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
@@ -38,7 +38,7 @@ cookies = sign.login()
 def generate_response(prompt_input, email, passwd):
     # Create ChatBot                        
     chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
-    return chatbot.query(prompt_input, web_search=True)
+    return chatbot.query(prompt_input, web_search=False)
 
 # User-provided prompt
 if prompt := st.chat_input(disabled=not (hf_email and hf_pass)):
@@ -46,11 +46,14 @@ if prompt := st.chat_input(disabled=not (hf_email and hf_pass)):
     with st.chat_message("user"):
         st.write(prompt)
 
+response=""
 # Generate a new response if last message is not from assistant
+#st.write(st.session_state.messages)
+#st.write(st.session_state.messages[-1])
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             response = generate_response(prompt, hf_email, hf_pass) 
             st.write(response) 
-    message = {"role": "assistant", "content": response}
+    message = {"role": "assistant", "content": response.text}
     st.session_state.messages.append(message)
