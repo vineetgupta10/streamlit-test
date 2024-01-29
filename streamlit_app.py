@@ -37,7 +37,7 @@ def generate_response(prompt_input, email, passwd):
     cookies = sign.login()
     # Create ChatBot                        
     chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
-    return chatbot.query(prompt_input)
+    return chatbot.query(prompt_input, web_search=True)
 
 # User-provided prompt
 if prompt := st.chat_input(disabled=not (hf_email and hf_pass)):
